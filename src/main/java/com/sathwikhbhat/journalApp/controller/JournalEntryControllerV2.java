@@ -2,9 +2,11 @@ package com.sathwikhbhat.journalApp.controller;
 
 import com.sathwikhbhat.journalApp.entity.JournalEntry;
 import com.sathwikhbhat.journalApp.service.JournalEntryService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,28 +21,36 @@ public class JournalEntryControllerV2 {
 
     @GetMapping()
     public List<JournalEntry> getAll() {
-        return null;
+        return journalEntryService.getAll();
     }
 
     @PostMapping
-    public boolean createEntry(@RequestBody JournalEntry myEntry) {
+    public JournalEntry createEntry(@RequestBody JournalEntry myEntry) {
+        myEntry.setDate(LocalDateTime.now());
         journalEntryService.saveEntry(myEntry);
-        return true;
+        return myEntry;
     }
 
     @GetMapping("id/{myId}")
-    public JournalEntry getJournalById(@PathVariable Long myId) {
-        return null;
+    public JournalEntry getJournalById(@PathVariable ObjectId myId) {
+        return journalEntryService.fingById(myId).orElse(null);
     }
 
     @DeleteMapping("id/{myId}")
-    public JournalEntry deleteEntrybyId(@PathVariable Long myId) {
-        return null;
+    public boolean deleteEntrybyId(@PathVariable ObjectId myId) {
+        journalEntryService.deleteById(myId);
+        return true;
     }
 
     @PutMapping("/id/{id}")
-    public JournalEntry updateJournayById(@PathVariable Long myId, @RequestBody JournalEntry myEntry) {
-       return null;
+    public JournalEntry updateJournayById(@PathVariable ObjectId id, @RequestBody JournalEntry newEntry) {
+        JournalEntry old = journalEntryService.fingById(id).orElse(null);
+        if(old != null) {
+            old.setTitle(newEntry.getTitle() != null && !newEntry.getTitle().isEmpty() ? newEntry.getTitle() : old.getTitle());
+            old.setContent(newEntry.getContent() != null && !newEntry.getContent().isEmpty() ? newEntry.getContent() : old.getContent());
+        }
+        journalEntryService.saveEntry(old);
+        return old;
     }
 
 }
