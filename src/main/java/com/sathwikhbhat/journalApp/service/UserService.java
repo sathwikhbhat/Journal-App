@@ -1,6 +1,5 @@
 package com.sathwikhbhat.journalApp.service;
 
-import com.sathwikhbhat.journalApp.entity.JournalEntry;
 import com.sathwikhbhat.journalApp.entity.User;
 import com.sathwikhbhat.journalApp.repository.UserRepository;
 import org.bson.types.ObjectId;
@@ -23,7 +22,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> fingById(ObjectId id) {
+    public Optional<User> findById(ObjectId id) {
         return userRepository.findById(id);
     }
 
