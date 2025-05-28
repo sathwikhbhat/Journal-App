@@ -35,7 +35,10 @@ public class JournalEntryService {
     }
 
     public void deleteById(ObjectId id) {
-        journalEntryRepository.deleteById(id);
-
+        try {
+            journalEntryRepository.deleteById(id);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
     }
 }
