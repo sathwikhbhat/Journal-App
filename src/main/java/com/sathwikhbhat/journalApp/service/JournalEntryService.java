@@ -1,6 +1,7 @@
 package com.sathwikhbhat.journalApp.service;
 
 import com.sathwikhbhat.journalApp.entity.JournalEntry;
+import com.sathwikhbhat.journalApp.entity.User;
 import com.sathwikhbhat.journalApp.repository.JournalEntryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -17,9 +18,23 @@ public class JournalEntryService {
     @Autowired
     private JournalEntryRepository journalEntryRepository;
 
+    @Autowired
+    private UserService userService;
+
+    public void saveEntry(JournalEntry journalEntry, String userName) {
+        try {
+            User user = userService.findByUserName(userName);
+            journalEntry.setDate(LocalDateTime.now());
+            JournalEntry saved = journalEntryRepository.save(journalEntry);
+            user.getJournalEntries().add(saved);
+            userService.saveEntry(user);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
+
     public void saveEntry(JournalEntry journalEntry) {
         try {
-            journalEntry.setDate(LocalDateTime.now());
             journalEntryRepository.save(journalEntry);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -34,8 +49,11 @@ public class JournalEntryService {
         return journalEntryRepository.findById(id).orElse(null);
     }
 
-    public void deleteById(ObjectId id) {
+    public void deleteById(ObjectId id, String userName) {
         try {
+            User user = userService.findByUserName(userName);
+            user.getJournalEntries().removeIf(x -> x.getId().equals(id));
+            userService.saveEntry(user);
             journalEntryRepository.deleteById(id);
         } catch (Exception e) {
             log.error(e.getMessage());
