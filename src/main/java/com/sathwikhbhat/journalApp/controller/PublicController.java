@@ -29,7 +29,7 @@ public class PublicController {
     @PostMapping("createUser")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         try {
-            userService.saveEntry(user);
+            userService.saveNewUser(user);
             log.info("User created successfully: {}", user.getUserName());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DuplicateKeyException e) {

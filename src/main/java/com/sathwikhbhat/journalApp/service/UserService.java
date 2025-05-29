@@ -2,12 +2,15 @@ package com.sathwikhbhat.journalApp.service;
 
 import com.sathwikhbhat.journalApp.entity.User;
 import com.sathwikhbhat.journalApp.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
+import java.util.List;
 
+@Slf4j
 @Component
 public class UserService {
 
@@ -17,9 +20,13 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void saveEntry(User user) {
+    public void saveNewUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Arrays.asList("USER"));
+        user.setRoles(List.of("USER"));
+        userRepository.save(user);
+    }
+
+    public void saveUser(User user) {
         userRepository.save(user);
     }
 
@@ -35,7 +42,7 @@ public class UserService {
 //        try {
 //            userRepository.deleteById(id);
 //        } catch (Exception e) {
-//            //log.error(e.getMessage());
+//            log.error(e.getMessage());
 //        }
 //    }
 
