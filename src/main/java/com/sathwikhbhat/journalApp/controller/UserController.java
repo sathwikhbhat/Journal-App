@@ -1,21 +1,20 @@
 package com.sathwikhbhat.journalApp.controller;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DuplicateKeyException;
 import com.sathwikhbhat.journalApp.entity.User;
+import com.sathwikhbhat.journalApp.repository.UserRepository;
 import com.sathwikhbhat.journalApp.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -25,42 +24,46 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public ResponseEntity<List<User>> getAllEntries() {
-        List<User> allEntries = userService.getAllEntries();
-        if (!allEntries.isEmpty() && allEntries != null) {
-            return new ResponseEntity<>(allEntries, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+    @Autowired
+    private UserRepository userRepository;
 
-    @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user) {
-        try {
-            userService.saveEntry(user);
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
-        } catch (DuplicateKeyException e) {
-            log.error(e.getMessage());
-            return new ResponseEntity<>("Username already exists: ", HttpStatus.CONFLICT);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return new ResponseEntity<>("Internal server error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    @Transactional
+    @PutMapping
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
 
-    @PutMapping("/{userName}")
-    public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable String userName) {
         try {
             User userInDB = userService.findByUserName(userName);
-            if (userInDB != null) {
-                userInDB.setUserName(user.getUserName() != null && !user.getUserName().isEmpty() ? user.getUserName() : userInDB.getUserName());
-                userInDB.setPassword(user.getPassword() != null && !user.getPassword().isEmpty() ? user.getPassword() : userInDB.getPassword());
-                userService.saveEntry(userInDB);
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            if (userInDB == null) {
+                log.warn("User not found: {}", userName);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            userInDB.setUserName(!user.getUserName().isEmpty() ? user.getUserName() : userInDB.getUserName());
+            userInDB.setPassword(!user.getPassword().isEmpty() ? user.getPassword() : userInDB.getPassword());
+            userService.saveEntry(userInDB);
+            log.info("User updated successfully: {}", userName);
+            return new ResponseEntity<>(HttpStatus.OK);
+
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            log.error("Error updating user: {}", userName, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Transactional
+    @DeleteMapping
+    public ResponseEntity<User> deleteUserById() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        try {
+            userRepository.deleteByUserName(authentication.getName());
+            log.info("User data deleted successfully: {}", userName);
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error("Error updating user: {}", userName, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
