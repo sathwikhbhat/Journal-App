@@ -26,18 +26,24 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void saveNewAdmin(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(List.of("USER", "ADMIN"));
+        userRepository.save(user);
+    }
+
     public void saveUser(User user) {
         userRepository.save(user);
     }
 
-//    public List<User> getAllEntries() {
-//        return userRepository.findAll();
-//    }
+    public List<User> getAllEntries() {
+        return userRepository.findAll();
+    }
 
 //    public User findById(ObjectId id) {
 //        return userRepository.findById(id).orElse(null);
 //    }
-
+//
 //    public void deleteById(ObjectId id) {
 //        try {
 //            userRepository.deleteById(id);
