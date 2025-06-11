@@ -4,3 +4,13 @@ spring:
       uri: ${MONGODB_URI}
       database: journaldb
       auto-index-creation: true
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate=DEBUG:
+      mongodb:
+        driver=DEBUG:
