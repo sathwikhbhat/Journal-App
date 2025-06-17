@@ -1,6 +1,7 @@
 package com.sathwikhbhat.journalApp.entity;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,17 +22,29 @@ import java.util.List;
 public class User {
     @Id
     private ObjectId id;
+
     @Indexed(unique = true)
     @NonNull
+    @NotBlank(message = "User Name is required")
     private String userName;
+
     @NonNull
+    @NotBlank(message = "Email I'd is required")
     @Indexed(unique = true)
-    @Email
+    @Email(
+            regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
+            message = "Invalid email address"
+    )
     private String email;
+
     private boolean sentimentAnalysis;
+
     @NonNull
+    @NotBlank(message = "Password is required")
     private String password;
+
     @DBRef
     private List<JournalEntry> journalEntries = new ArrayList<>();
+
     private List<String> roles;
 }
