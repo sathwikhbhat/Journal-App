@@ -1,10 +1,10 @@
-package com.sathwikhbhat.journalApp.scheduler;
+package com.sathwikhbhat.journalapp.scheduler;
 
-import com.sathwikhbhat.journalApp.entity.JournalEntry;
-import com.sathwikhbhat.journalApp.entity.User;
-import com.sathwikhbhat.journalApp.enums.Sentiment;
-import com.sathwikhbhat.journalApp.repository.UserRepositoryImpl;
-import com.sathwikhbhat.journalApp.service.EmailService;
+import com.sathwikhbhat.journalapp.entity.JournalEntry;
+import com.sathwikhbhat.journalapp.entity.User;
+import com.sathwikhbhat.journalapp.enums.Sentiment;
+import com.sathwikhbhat.journalapp.repository.UserRepositoryImpl;
+import com.sathwikhbhat.journalapp.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

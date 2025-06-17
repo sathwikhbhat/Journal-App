@@ -9,9 +9,9 @@
         <relativePath/>
     </parent>
     <groupId>com.sathwikhbhat</groupId>
-    <artifactId>journalApp</artifactId>
+    <artifactId>journal-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>journalApp</name>
+    <name>Journal App</name>
     <description>E2EE Journal App</description>
     <url/>
     <licenses>

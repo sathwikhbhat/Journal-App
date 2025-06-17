@@ -1,7 +1,7 @@
-package com.sathwikhbhat.journalApp.controller;
+package com.sathwikhbhat.journalapp.controller;
 
-import com.sathwikhbhat.journalApp.entity.User;
-import com.sathwikhbhat.journalApp.service.UserService;
+import com.sathwikhbhat.journalapp.entity.User;
+import com.sathwikhbhat.journalapp.service.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

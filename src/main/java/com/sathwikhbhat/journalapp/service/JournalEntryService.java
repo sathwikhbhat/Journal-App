@@ -1,8 +1,8 @@
-package com.sathwikhbhat.journalApp.service;
+package com.sathwikhbhat.journalapp.service;
 
-import com.sathwikhbhat.journalApp.entity.JournalEntry;
-import com.sathwikhbhat.journalApp.entity.User;
-import com.sathwikhbhat.journalApp.repository.JournalEntryRepository;
+import com.sathwikhbhat.journalapp.entity.JournalEntry;
+import com.sathwikhbhat.journalapp.entity.User;
+import com.sathwikhbhat.journalapp.repository.JournalEntryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @Slf4j

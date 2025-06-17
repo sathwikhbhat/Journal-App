@@ -1,4 +1,4 @@
-package com.sathwikhbhat.journalApp;
+package com.sathwikhbhat.journalapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

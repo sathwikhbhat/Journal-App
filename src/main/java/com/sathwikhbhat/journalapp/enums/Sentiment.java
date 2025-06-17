@@ -1,4 +1,4 @@
-package com.sathwikhbhat.journalApp.enums;
+package com.sathwikhbhat.journalapp.enums;
 
 public enum Sentiment {
     HAPPY,

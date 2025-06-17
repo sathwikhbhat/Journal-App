@@ -1,6 +1,6 @@
-package com.sathwikhbhat.journalApp.entity;
+package com.sathwikhbhat.journalapp.entity;
 
-import com.sathwikhbhat.journalApp.enums.Sentiment;
+import com.sathwikhbhat.journalapp.enums.Sentiment;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NonNull;

@@ -1,7 +1,7 @@
-package com.sathwikhbhat.journalApp.service;
+package com.sathwikhbhat.journalapp.service;
 
-import com.sathwikhbhat.journalApp.entity.User;
-import com.sathwikhbhat.journalApp.repository.UserRepository;
+import com.sathwikhbhat.journalapp.entity.User;
+import com.sathwikhbhat.journalapp.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

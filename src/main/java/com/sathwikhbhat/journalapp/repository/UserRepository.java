@@ -1,6 +1,6 @@
-package com.sathwikhbhat.journalApp.repository;
+package com.sathwikhbhat.journalapp.repository;
 
-import com.sathwikhbhat.journalApp.entity.User;
+import com.sathwikhbhat.journalapp.entity.User;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
