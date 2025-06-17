@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public class UserRepositoryImpl {
 
     @Autowired
@@ -17,7 +17,10 @@ public class UserRepositoryImpl {
 
     public List<User> getUsersForSA() {
         Query query = new Query();
-        query.addCriteria(Criteria.where("email").regex(".*@.*").and("sentimentAnalysis").is(true));
+        query.addCriteria(Criteria.where("email")
+                .regex("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")
+                .and("sentimentAnalysis").is(true));
         return mongoTemplate.find(query, User.class);
     }
+
 }
