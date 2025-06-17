@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@Transactional
 @RequestMapping("/admin")
 public class AdminController {
 
@@ -28,6 +30,7 @@ public class AdminController {
     public ResponseEntity<?> getAllUsers() {
         List<User> allUsers = userService.getAllEntries();
         if (!allUsers.isEmpty()) {
+            log.info("Users found");
             return new ResponseEntity<>(allUsers, HttpStatus.OK);
         }
         log.error("No users found");
@@ -42,10 +45,10 @@ public class AdminController {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DuplicateKeyException e) {
             log.error("Exception occured: ", e);
-            return new ResponseEntity<>("Username already exists: ", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Username already exists", HttpStatus.CONFLICT);
         } catch (Exception e) {
             log.error("Exception occured: ", e);
-            return new ResponseEntity<>("Internal server error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

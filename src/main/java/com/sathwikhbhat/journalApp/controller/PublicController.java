@@ -34,11 +34,11 @@ public class PublicController {
             log.info("User created successfully: {}", user.getUserName());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DuplicateKeyException e) {
-            log.error(e.getMessage());
-            return new ResponseEntity<>("Username already exists: ", HttpStatus.CONFLICT);
+            log.error("Exception occurred: {}", e.getMessage());
+            return new ResponseEntity<>("Username already exists", HttpStatus.CONFLICT);
         } catch (Exception e) {
-            log.error(e.getMessage());
-            return new ResponseEntity<>("Internal server error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error("Exception occurred: {}", e.getMessage());
+            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

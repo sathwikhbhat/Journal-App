@@ -30,7 +30,7 @@ public class UserController {
 
     @Transactional
     @PutMapping
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
 
@@ -38,44 +38,44 @@ public class UserController {
             User userInDB = userService.findByUserName(userName);
             if (userInDB == null) {
                 log.warn("User not found: {}", userName);
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("User not found",HttpStatus.NOT_FOUND);
             }
             userInDB.setUserName(!user.getUserName().isEmpty() ? user.getUserName() : userInDB.getUserName());
             userInDB.setPassword(!user.getPassword().isEmpty() ? user.getPassword() : userInDB.getPassword());
             userService.saveNewUser(userInDB);
             log.info("User updated successfully: {}", userName);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("User updated",HttpStatus.OK);
 
         } catch (Exception e) {
             log.error("Error updating user: {}", userName, e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Transactional
     @DeleteMapping
-    public ResponseEntity<User> deleteUserById() {
+    public ResponseEntity<?> deleteUserById() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         try {
             userRepository.deleteByUserName(authentication.getName());
             log.info("User data deleted successfully: {}", userName);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("User data deleted", HttpStatus.OK);
 
         } catch (Exception e) {
             log.error("Error updating user: {}", userName, e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping
-    public ResponseEntity<User> getUser() {
+    public ResponseEntity<?> getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User user = userService.findByUserName(userName);
         if (user == null) {
             log.warn("User not found: {}", userName);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

@@ -31,15 +31,16 @@ public class JournalEntryService {
             user.getJournalEntries().add(saved);
             userService.saveUser(user);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("Exception occurred: {}", e.getMessage());
         }
     }
 
     public void saveEntry(JournalEntry journalEntry) {
         try {
             journalEntryRepository.save(journalEntry);
+            log.info("Journal entry saved successfully");
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("Exception occurred: {}", e.getMessage());
         }
     }
 
@@ -61,7 +62,7 @@ public class JournalEntryService {
                 journalEntryRepository.deleteById(id);
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("Exception occurred: {}", e.getMessage());
         }
         return removed;
     }
