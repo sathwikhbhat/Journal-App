@@ -4,6 +4,7 @@ import com.sathwikhbhat.journalApp.entity.JournalEntry;
 import com.sathwikhbhat.journalApp.entity.User;
 import com.sathwikhbhat.journalApp.service.JournalEntryService;
 import com.sathwikhbhat.journalApp.service.UserService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class JournalEntryController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createEntry(@RequestBody JournalEntry myEntry) {
+    public ResponseEntity<?> createEntry(@Valid @RequestBody JournalEntry myEntry) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         try {
