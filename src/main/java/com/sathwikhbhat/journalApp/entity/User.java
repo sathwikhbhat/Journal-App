@@ -1,5 +1,6 @@
 package com.sathwikhbhat.journalApp.entity;
 
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,9 @@ public class User {
     @Indexed(unique = true)
     @NonNull
     private String userName;
+    @NonNull
+    @Indexed(unique = true)
+    @Email
     private String email;
     private boolean sentimentAnalysis;
     @NonNull

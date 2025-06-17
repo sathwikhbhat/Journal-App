@@ -2,6 +2,7 @@ package com.sathwikhbhat.journalApp.controller;
 
 import com.sathwikhbhat.journalApp.entity.User;
 import com.sathwikhbhat.journalApp.service.UserService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -27,7 +28,7 @@ public class PublicController {
     }
 
     @PostMapping("createUser")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
         try {
             userService.saveNewUser(user);
             log.info("User created successfully: {}", user.getUserName());

@@ -3,6 +3,7 @@ package com.sathwikhbhat.journalApp.controller;
 import com.mongodb.DuplicateKeyException;
 import com.sathwikhbhat.journalApp.entity.User;
 import com.sathwikhbhat.journalApp.service.UserService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class AdminController {
     }
 
     @PostMapping("createAdminUser")
-    public ResponseEntity<?> createAdminUser(@RequestBody User user) {
+    public ResponseEntity<?> createAdminUser(@Valid @RequestBody User user) {
         try {
             userService.saveNewAdmin(user);
             log.info("User created successfully: {}", user.getUserName());
