@@ -4,6 +4,8 @@ import com.sathwikhbhat.journalapp.entity.User;
 import com.sathwikhbhat.journalapp.service.UserDetailsServiceImpl;
 import com.sathwikhbhat.journalapp.service.UserService;
 import com.sathwikhbhat.journalapp.utility.JwtUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/public")
+@Tag(name = "Public Controller", description = "Operations pertaining to public endpoints")
 public class PublicController {
 
     @Autowired
@@ -38,11 +41,13 @@ public class PublicController {
     private JwtUtil jwtUtil;
 
     @GetMapping("/healthCheck")
+    @Operation(summary = "Health check")
     public String healthCheck() {
         return "OK";
     }
 
     @PostMapping("/signup")
+    @Operation(summary = "User signup")
     public ResponseEntity<?> signup(@Valid @RequestBody User user) {
         try {
             userService.saveNewUser(user);
@@ -58,6 +63,7 @@ public class PublicController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "User login")
     public ResponseEntity<?> login(@Valid @RequestBody User user) {
         try {
             authenticationManager.authenticate(

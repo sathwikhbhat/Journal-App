@@ -3,6 +3,8 @@ package com.sathwikhbhat.journalapp.controller;
 import com.sathwikhbhat.journalapp.entity.User;
 import com.sathwikhbhat.journalapp.repository.UserRepository;
 import com.sathwikhbhat.journalapp.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/user")
+@Tag(name = "User Controller", description = "Operations pertaining to user data")
 public class UserController {
 
     @Autowired
@@ -30,6 +33,7 @@ public class UserController {
 
     @Transactional
     @PutMapping
+    @Operation(summary = "Update user data")
     public ResponseEntity<?> updateUser(@RequestBody User user) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
@@ -54,6 +58,7 @@ public class UserController {
 
     @Transactional
     @DeleteMapping
+    @Operation(summary = "Delete user data")
     public ResponseEntity<?> deleteUserById() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
@@ -69,6 +74,7 @@ public class UserController {
     }
 
     @GetMapping
+    @Operation(summary = "Get user data")
     public ResponseEntity<?> getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
