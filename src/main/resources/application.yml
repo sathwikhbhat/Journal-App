@@ -22,11 +22,9 @@ spring:
 
 logging:
   level:
-    org:
-      springframework:
-        data:
-          mongodb:
-            core:
-              MongoTemplate: DEBUG
-    mongodb:
-      driver: DEBUG
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: WARN
+    org.mongodb.driver: ERROR
+    org.springframework.data.mongodb.core.MongoTemplate: INFO
+    com.sathwikhbhat: INFO
