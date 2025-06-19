@@ -17,6 +17,9 @@ spring:
           starttls:
             enable: true
 
+  main:
+    allow-circular-references: true
+
 logging:
   level:
     org:
