@@ -12,12 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -42,13 +37,13 @@ public class UserController {
             User userInDB = userService.findByUserName(userName);
             if (userInDB == null) {
                 log.warn("User not found: {}", userName);
-                return new ResponseEntity<>("User not found",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
             }
             userInDB.setUserName(!user.getUserName().isEmpty() ? user.getUserName() : userInDB.getUserName());
             userInDB.setPassword(!user.getPassword().isEmpty() ? user.getPassword() : userInDB.getPassword());
             userService.saveNewUser(userInDB);
             log.info("User updated successfully: {}", userName);
-            return new ResponseEntity<>("User updated",HttpStatus.OK);
+            return new ResponseEntity<>("User updated", HttpStatus.OK);
 
         } catch (Exception e) {
             log.error("Error updating user: {}", userName, e);
