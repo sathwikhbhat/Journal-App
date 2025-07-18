@@ -2,7 +2,6 @@
 
 An E2EE journaling application built with **Spring Boot** and **MongoDB**, enabling users to create, view, update, and delete personal journal entries with authentication, sentiment analysis and email notifications.
 
----
 
 ## Features
 
@@ -13,7 +12,6 @@ An E2EE journaling application built with **Spring Boot** and **MongoDB**, enabl
 * **Email notifications** (weekly sentiment summary).
 * **Testing setup** with JUnit and Mockito.
 
----
 
 ## Tech Stack
 
@@ -26,7 +24,6 @@ An E2EE journaling application built with **Spring Boot** and **MongoDB**, enabl
 * **Scheduling**: Spring's `@Scheduled`
 * **Dev Tools**: Lombok, Maven, SonarLint/SonarQube
 
----
 
 ## Getting Started
 
@@ -61,7 +58,6 @@ An E2EE journaling application built with **Spring Boot** and **MongoDB**, enabl
 
    The API will be available at **`http://localhost:8080`**.
 
----
 
 ## Endpoints Overview
 
@@ -78,7 +74,6 @@ An E2EE journaling application built with **Spring Boot** and **MongoDB**, enabl
 | `/user`                   | PUT    | Update user data                         |
 | `/user`                   | DELETE | Delete user data                         |
 
----
 
 ## Usage Example
 
@@ -99,7 +94,6 @@ GET /journalEntries
 Authorization: Bearer <your_jwt>
 ```
 
----
 
 ## System Architecture
 <details>
@@ -153,7 +147,6 @@ Run your tests with:
 ```bash
 mvn test
 ```
----
 
 ## Contributing
 
@@ -166,14 +159,11 @@ Contributions are welcome!
 
 Please follow the existing style rules and update unit tests where necessary.
 
----
 
 ## Credits
 
 This project was built with guidance, feedback, and support from [@thevipulvats](https://github.com/thevipulvats).
 
-
----
 
 ## Contact
 
